@@ -1,0 +1,39 @@
+<input type="text" id="roomName">
+<input type="text" id="messageInput" placeholder="Írj egy üzenetet...">
+<button onclick="sendMessage()">Küldés</button>
+
+<ul id="messages"></ul>
+
+<script>
+    const roomName = "chatroom1";  // Példa szoba neve
+    const chatSocket = new WebSocket(`ws://${window.location.host}/ws/chat/${roomName}/`);
+
+    chatSocket.onmessage = async function(event) {
+        const data = JSON.parse(event.data);
+        const messages = document.getElementById("messages");
+        const newMessage = document.createElement("li");
+        newMessage.textContent = `${data.username}: ${data.message}`;
+        messages.appendChild(newMessage);
+
+        let data1 = await fetch('/getUserDetails/', {
+            method: "POST",
+            headers: {"Content-Type": "application/json", "X-CSRFToken": getCSRFToken()},
+            body: JSON.stringify({user_id: '4'})})
+        console.log(await data1.json())
+    };
+
+    function sendMessage() {
+        const input = document.getElementById("messageInput");
+        const message = input.value;
+        chatSocket.send(JSON.stringify({ message: message }));
+        input.value = "";
+    }
+
+    function getCSRFToken() {
+        const cookieValue = document.cookie
+            .split("; ")
+            .find(row => row.startsWith("csrftoken="))
+            ?.split("=")[1];
+        return cookieValue || "";
+    }
+</script>

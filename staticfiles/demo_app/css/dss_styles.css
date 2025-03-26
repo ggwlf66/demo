@@ -1,0 +1,119 @@
+/*
+dss is an acronym for dotstorm styles 
+EVERY selfmade classname should start with dss_
+*/
+
+::-webkit-scrollbar {
+    width: 8px;
+    position: fixed;
+    top: 0;  /* Ha az ablak tetejére szeretnéd */
+    right: 0;  /* A jobb oldalra */
+    z-index: 9999; 
+}
+
+
+::-webkit-scrollbar-thumb {
+    position: fixed;
+    border-radius: 10px;
+    background-color: gray;
+    z-index: 9999; 
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    /*overflow: hidden;  Ne lehessen görgetni az oldalt */
+    
+}
+
+.dss_main {
+    width: 100vw;
+    /*height: 100vh;*/
+    /*overflow: auto;  Görgetősáv a div-en belül */
+    display: flex;
+    box-sizing: border-box;
+    background-image: url('../images/7deb4086b0de7d924d0baca1be90a320.jpg');/*C:\Users\gg66\Desktop\Dev\demo\demo\demo_app\static\demo_app\images\*/
+    height: auto; /* Magasságot a tartalomhoz igazítja */
+    background-size: contain; /* A teljes kép látszik */
+    background-repeat: no-repeat;
+}
+
+.dss_nav {
+    width: 70px;
+    background-color: gray;
+    height: 100vh;
+}
+
+
+.dss_threads_container {
+    width: calc(100vw - 140px);
+    height: 100vh;/*scroll;*/
+    overflow:auto; /*Görgetősáv a div-en belül */
+    display: flex;
+    gap: 20px; /* Távolság az elemek között */
+    justify-content: center;
+}
+
+.dss_main_thread {
+    background-color: lightgray;
+    width: 400px;
+    /*height: calc(100vh - 20px);
+    height: 100vh;*/
+    height: 100%;
+    border-radius: 10px;
+    flex-shrink: 0; /* Ne nyomódjanak össze az elemek */
+}
+
+.dss_thread {
+    background-color: lightgray;
+    width: 400px;
+    /*height: calc(100vh - 20px);
+    height: 100vh;*/
+    border-radius: 10px;
+    flex-shrink: 0; /* Ne nyomódjanak össze az elemek */
+}
+
+.dss_thread_inner {
+    overflow: auto;
+    height: calc(100vh - 43px);
+}
+
+.dss_thread_nav {
+    height: 25px;
+    background-color: gray;
+    border-radius: 10px 10px 0px 0px;
+}
+
+.dss_body {
+    width: 400px;
+    height: calc(100vh - 30px);
+    /*display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;*/
+    overflow: auto;
+    border-radius: 10px;
+    flex-shrink: 0; /* Ne nyomódjanak össze az elemek */
+}
+
+.dss_post {
+    width: 100%;
+    background-color: lightgray;
+}
+
+.dss_sent_msg{ /* the message you sent */
+    max-width: 300px;
+    background-color: lightgray;
+}
+
+.dss_rec_msg{ /* the message you received */
+    max-width: 300px;
+    background-color: darkgray;
+}
+
+.dss_nav_item {
+    width: 70px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+}

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %} <!---TODO load js files-->
+    <link rel="stylesheet" href="{% static 'demo_app/css/dss_styles.css' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap-5.3.3-dist/css/bootstrap.min.css' %}">
+    <script src="{% static 'bootstrap-5.3.3-dist/js/bootstrap.bundle.js' %}" ></script>
+    <link rel="stylesheet" href="{% static 'fontawesome/css/all.min.css' %}">
+    <title>Login</title>
+</head>
+<body>
+    <div class="dss_main">
+        <div class="dss_nav" style="background: rgba(0,0,0,0.0) !important;"></div>
+        <div class="dss_threads_container" id="threads_container">
+            <div class="dss_main_thread">
+                    <div class="dss_thread_inner d-flex flex-column align-items-center pt-5">
+
+                        <h1 class="display-1 mb-0">friends</h1>
+                        <h5 class="fw-light pt-0 mt-0 mb-0">by</h5>
+                        <h5 class="fw-light">Gergely Farkas</h5>
+
+                        <div class="dss_post mt-5 pb-2 align-items-center" style="background-color: #bababa;">
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab">
+                                        Login
+                                    </button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab">
+                                        Sign up
+                                    </button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab">
+                                        About
+                                    </button>
+                                </li>
+                            </ul>
+
+                            <div class="tab-content mt-3" id="myTabContent">
+                                <div class="tab-pane fade show active" id="home" role="tabpanel">
+                                    <!--<form method="post">
+                                        {% csrf_token %}
+                                        {% if messages %}
+                                            {% for message in messages %}
+                                                <p style="color: red;">{{ message }}</p>
+                                            {% endfor %}
+                                        {% endif %}
+                                        
+                                        
+                                    </form>-->
+                                    <div class="d-flex flex-column align-items-center">
+                                            
+                                        <div style="display: flex;">
+                                            <input class="form-control form-control-sm" type="text" id="username" name="username" required placeholder="Username">
+                                        </div>
+                                        
+                                        <div style="display: flex;">
+                                            <input class="form-control form-control-sm mt-1" type="password" id="password" name="password" required placeholder="Password">
+                                        </div>
+                                        <div style="display: flex;" class="mt-1">
+                                            <label for="rememberme" class="me-1">Remember me</label>
+                                            <input name="rememberme" type="checkbox">
+                                        </div>
+                                        <button type="button" id="btnLogin" class="btn btn-secondary w-25 mt-4">Login</button>
+                                        <a href="#">forgot password?</a>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="profile" role="tabpanel">
+                                    <form method="post">
+                                        <!--{% csrf_token %}
+                                        {% if messages %}
+                                            {% for message in messages %}
+                                                <p style="color: red;">{{ message }}</p>
+                                            {% endfor %}
+                                        {% endif %}-->
+                                        
+                                        <div class="d-flex flex-column align-items-center">
+                                            
+                                            <div style="display: flex;">
+                                                <input class="form-control form-control-sm" type="text"  name="username" id="usernameInput" required placeholder="Username">
+                                            </div>
+
+                                            <div style="display: flex;">
+                                                <input class="form-control form-control-sm mt-1" type="password" id="passwordInput"name="password" required placeholder="Password">
+                                            </div>
+
+                                            <div style="display: flex;">
+                                                <input class="form-control form-control-sm mt-1" type="password" id="passwordConfInput"name="password" required placeholder="Confirm password">
+                                            </div>
+
+                                            <button type="button" id="btnSignUp" class="btn btn-secondary w-25 mt-2">Sign up</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="tab-pane fade" id="contact" role="tabpanel">
+                                    <p>Here you can read about how awsome this app is and how awsome i am.</p>
+                                </div>
+                            </div>
+
+                            
+                        </div>
+                    </div>
+                
+            </div>
+        </div>
+    </div>
+    <script>
+        window.addEventListener('keydown', function(e){
+            if (e.key === 'Enter'){
+                document.getElementById('btnLogin').click;
+            }
+        })
+        document.getElementById('btnLogin').addEventListener('click', function(){
+            let usernameValue = document.getElementById('username').value
+            let passwordValue = document.getElementById('password').value
+            fetch("/api_login/", {
+            method: "POST",
+            headers: {"Content-Type": "application/json",},
+            body: JSON.stringify({ username: usernameValue, password: passwordValue }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.token) {
+                    localStorage.setItem("token", data.token);
+                    window.location.href = data.redirect;  // 🔹 Átirányítás a szerver által küldött URL-re
+                }
+            })
+            .catch(error => console.error("Hiba:", error));
+        })
+
+        document.getElementById('btnSignUp').addEventListener('click', function(){
+            let usernameValue = document.getElementById('usernameInput').value
+            let passwordValue = document.getElementById('passwordInput').value
+            let passwordConfValue = document.getElementById('passwordConfInput').value
+            fetch("/api_register/", {
+            method: "POST",
+            headers: {"Content-Type": "application/json",},
+            body: JSON.stringify({ username: usernameValue, password: passwordValue, password_conf:passwordConfValue }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.token) {
+                    localStorage.setItem("token", data.token);
+                    window.location.href = data.redirect;  // 🔹 Átirányítás a szerver által küldött URL-re
+                }
+            })
+            .catch(error => console.error("Hiba:", error));
+        })
+        
+    </script>
+</body>
+</html>
