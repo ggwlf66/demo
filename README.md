@@ -1,4 +1,4 @@
-Ez egy kis közösségi média platform kezdemény. Backend oldalról python django keretrendszer segítségével készült, a frontend-hez csak bootstrap-et használtam. A projekt szigorúan gyakrolás jelleggel készült.
+Ez egy kis közösségi média platform kezdemény. Backend oldalról python django keretrendszer segítségével készült, a frontend-hez csak bootstrap-et használtam. A projekt szigorúan gyakrolás jelleggel készült de volt már és lehet is elérhető www-n microsoft azure-on keresztül.
 
 Install:
 1. clone the repo
